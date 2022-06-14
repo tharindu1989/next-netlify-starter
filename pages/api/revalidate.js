@@ -1,11 +1,11 @@
 export default async function handler(req, res) {
-  if (req.body["secret"] !== process.env.NETLIFY_WEBHOOK_SECRET) {
-    return res
-      .status(401)
-      .json({
-        message: "Invalid token",
-        token: process.env.NETLIFY_WEBHOOK_SECRET,
-      });
+  const localSecret = process.env.NETLIFY_WEBHOOK_SECRET;
+  if (req.body["secret"] != localSecret) {
+    return res.status(401).json({
+      message: "Invalid token",
+      req: req.body["secret"],
+      token: process.env.NETLIFY_WEBHOOK_SECRET === req.body["secret"],
+    });
   }
   console.log("Update Page : ", req.body["slug"]["en-US"]);
   try {
