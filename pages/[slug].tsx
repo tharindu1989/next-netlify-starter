@@ -32,6 +32,7 @@ export async function getStaticProps({ params }) {
 
   const pageComponentsId = await queryPageBySlug(params.slug, preview);
   const page = await getPageByComponents(pageComponentsId, preview);
+  console.log("page", page);
   return {
     props: {
       page,
